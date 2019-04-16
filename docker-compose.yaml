@@ -1,0 +1,50 @@
+version: '3'
+services:
+  service-registry:
+    image: henry.desousa/service-registry
+    container_name: service-registry
+    ports:
+    - 8761:8761
+
+  guess-the-verb:
+    image: henry.desousa/guesstheverb
+    container_name: guess-the-verb
+    ports:
+    - 8080:8080
+    environment:
+    - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+    - rabbitmq
+    - mongodb
+
+  gamification:
+    image: henry.desousa/gamification
+    container_name: gamification
+    ports:
+    - 8081:8081
+    environment:
+    - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+    - rabbitmq
+    - mongodb
+
+  gateway:
+    image: henry.desousa/gateway
+    container_name: gateway
+    ports:
+    - 8000:8000
+    environment:
+    - "SPRING_PROFILES_ACTIVE=docker"
+
+  mongodb:
+    image: mongo
+    container_name: my-mongo
+    ports:
+    - 27017:27017
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: my-rabbitmq
+    ports:
+    - "5672:5672"
+    - "15672:15672"
