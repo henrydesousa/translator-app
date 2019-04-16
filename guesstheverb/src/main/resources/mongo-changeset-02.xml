@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mongoChangeLog>
+
+    <changeSet changeId="ChangeSet-02" author="henry">
+        <script>
+            db.createCollection("users");
+            db.users.insert([
+            {
+                "alias" : "john_doe"
+            },
+
+            {
+                "alias" : "henryedsl"
+            }
+            ]);
+        </script>
+    </changeSet>
+
+</mongoChangeLog>

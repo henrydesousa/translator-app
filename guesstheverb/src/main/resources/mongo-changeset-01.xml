@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mongoChangeLog>
+
+    <changeSet changeId="ChangeSet-01" author="henry">
+        <script>
+            db.createCollection("verbs");
+            db.verbs.insert([
+            {
+                "name" : "aprender",
+                "language" : "es",
+                "groupId" : "001",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to learn",
+                "language" : "en",
+                "groupId" : "001",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "lernen",
+                "language" : "de",
+                "groupId" : "001",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "vivir",
+                "language" : "es",
+                "groupId" : "002",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to live",
+                "language" : "en",
+                "groupId" : "002",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "wohnen",
+                "language" : "de",
+                "groupId" : "002",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "hablar",
+                "language" : "es",
+                "groupId" : "003",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to speak",
+                "language" : "en",
+                "groupId" : "003",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "sprehen",
+                "language" : "de",
+                "groupId" : "003",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "venir",
+                "language" : "es",
+                "groupId" : "004",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to come",
+                "language" : "en",
+                "groupId" : "004",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "kommen",
+                "language" : "de",
+                "groupId" : "004",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "trabajar",
+                "language" : "es",
+                "groupId" : "005",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to work",
+                "language" : "en",
+                "groupId" : "005",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "arbeiten",
+                "language" : "de",
+                "groupId" : "005",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "comer",
+                "language" : "es",
+                "groupId" : "006",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to eat",
+                "language" : "en",
+                "groupId" : "006",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "essen",
+                "language" : "de",
+                "groupId" : "006",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "beber",
+                "language" : "es",
+                "groupId" : "007",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to drink",
+                "language" : "en",
+                "groupId" : "007",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "trinken",
+                "language" : "de",
+                "groupId" : "007",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "tener",
+                "language" : "es",
+                "groupId" : "008",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to have",
+                "language" : "en",
+                "groupId" : "008",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "haben",
+                "language" : "de",
+                "groupId" : "008",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "entender",
+                "language" : "es",
+                "groupId" : "009",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to understand",
+                "language" : "en",
+                "groupId" : "009",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "verstehen",
+                "language" : "de",
+                "groupId" : "009",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "jugar",
+                "language" : "es",
+                "groupId" : "010",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "to play",
+                "language" : "en",
+                "groupId" : "010",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            },
+
+            {
+                "name" : "spielen",
+                "language" : "de",
+                "groupId" : "010",
+                "_class" : "org.henry.guesstheverb.domain.Verb"
+            }
+            ]);
+        </script>
+    </changeSet>
+
+</mongoChangeLog>
