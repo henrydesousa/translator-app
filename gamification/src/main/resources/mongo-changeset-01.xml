@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mongoChangeLog>
+
+    <changeSet changeId="ChangeSet-01" author="henry">
+        <script>
+            db.createCollection("badge_cards");
+            db.createCollection("score_cards");
+        </script>
+    </changeSet>
+
+</mongoChangeLog>

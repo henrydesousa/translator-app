@@ -1,6 +1,5 @@
 package org.henry.guesstheverb.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "verbs")
 public final class Verb {
 
-    @JsonIgnore
-    private String id;
     private final String name;
     private final String language;
     private final String groupId;

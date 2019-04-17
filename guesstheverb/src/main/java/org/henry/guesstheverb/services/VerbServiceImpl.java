@@ -69,7 +69,6 @@ public class VerbServiceImpl implements VerbService {
         return isCorrect;
     }
 
-    //TODO: add getResultById as in the book
     @Override
     public List<QuizAnswer> getStatsForUser(final String userAlias) {
         return quizAnswerRepository.findTop5ByUserAliasOrderByIdDesc(userAlias);
