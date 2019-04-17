@@ -21,6 +21,6 @@ class QuizAnswerClientImpl implements QuizAnswerClient {
 
     @Override
     public QuizAnswer retrieveQuizAnswerById(final String quizAnswerId) {
-        return restTemplate.getForObject(guessTheVerbHost + "/results/" + quizAnswerId, QuizAnswer.class);
+        return restTemplate.getForObject(guessTheVerbHost + "/answers/" + quizAnswerId, QuizAnswer.class);
     }
 }

@@ -16,4 +16,6 @@ public interface VerbService {
 
     Optional<QuizAnswer> getAnswerById(String answerId);
 
+    void initializeQuizAnswers(String fromLanguage, String toLanguage, String userAlias);
+
 }

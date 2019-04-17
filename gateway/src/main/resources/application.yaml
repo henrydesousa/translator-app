@@ -10,7 +10,7 @@ zuul:
       serviceId: guesstheverb
       strip-prefix: false
     results:
-      path: /results/**
+      path: /answers/**
       serviceId: guesstheverb
       strip-prefix: false
     leaders:

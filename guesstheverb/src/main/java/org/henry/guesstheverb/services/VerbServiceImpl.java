@@ -10,6 +10,7 @@ import org.henry.guesstheverb.repositories.VerbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +78,25 @@ public class VerbServiceImpl implements VerbService {
     @Override
     public Optional<QuizAnswer> getAnswerById(String answerId) {
         return quizAnswerRepository.findById(answerId);
+    }
+
+    @Override
+    public void initializeQuizAnswers(String fromLanguage, String toLanguage, String userAlias) {
+        List<Verb> verbs = verbRepository.findByLanguage(fromLanguage);
+        List<QuizAnswer> quizAnswers = new ArrayList<>();
+        User user = new User(userAlias);
+        QuizAnswer quizAnswer;
+
+        for (Verb verb : verbs) {
+            quizAnswer = new QuizAnswer(
+                    user,
+                    verb,
+                    "",
+                    toLanguage,
+                    false
+            );
+            quizAnswers.add(quizAnswer);
+        }
+        quizAnswerRepository.saveAll(quizAnswers);
     }
 }

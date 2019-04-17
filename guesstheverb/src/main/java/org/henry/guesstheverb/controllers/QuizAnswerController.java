@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/results")
+@RequestMapping("/answers")
 //TODO: tests pending
 public class QuizAnswerController {
 
@@ -40,13 +40,18 @@ public class QuizAnswerController {
     }
 
     @GetMapping
-    ResponseEntity<List<QuizAnswer>> getStatistics(@RequestParam("alias") String alias) {
+    ResponseEntity<List<QuizAnswer>> getStatistics(@RequestParam String alias) {
         return ResponseEntity.ok(verbService.getStatsForUser(alias));
     }
 
     @GetMapping("/{answerId}")
-    ResponseEntity<QuizAnswer> getResultById(final @PathVariable("answerId") String answerId) {
+    ResponseEntity<QuizAnswer> getAnswerById(final @PathVariable String answerId) {
         return ResponseEntity.ok(verbService.getAnswerById(answerId).get());
+    }
+
+    @PostMapping("/initialize")
+    void startGame(@RequestParam String fromLanguage, @RequestParam String toLanguage, @RequestParam String alias) {
+        verbService.initializeQuizAnswers(fromLanguage, toLanguage, alias);
     }
 
 }
