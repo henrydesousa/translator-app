@@ -9,7 +9,7 @@ zuul:
       path: /verbs/**
       serviceId: guesstheverb
       strip-prefix: false
-    results:
+    answers:
       path: /answers/**
       serviceId: guesstheverb
       strip-prefix: false

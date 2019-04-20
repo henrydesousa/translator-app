@@ -14,9 +14,9 @@ class QuizAnswerClientImpl implements QuizAnswerClient {
 
     @Autowired
     public QuizAnswerClientImpl(final RestTemplate restTemplate,
-                                @Value("${guesstheverb.host}") final String multiplicationHost) {
+                                @Value("${guesstheverb.host}") final String guessTheVerbHost) {
         this.restTemplate = restTemplate;
-        this.guessTheVerbHost = multiplicationHost;
+        this.guessTheVerbHost = guessTheVerbHost;
     }
 
     @Override
