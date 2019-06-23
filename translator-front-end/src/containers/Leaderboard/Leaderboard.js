@@ -21,7 +21,7 @@ class Leaderboard extends Component {
     render() {
         const leaderboardRows = this.state.leaderboard.map(l => {
             return (
-                <tr>
+                <tr key={l.userName}>
                     <td>{l.userName}</td>
                     <td>{l.score}</td>
                 </tr>
@@ -29,10 +29,10 @@ class Leaderboard extends Component {
         });
         return (
             <React.Fragment>
-                <div class="row center">
-                    <h5 class="header col s12 light orange-text">Leaderboard</h5>
+                <div className="row center">
+                    <h5 className="header col s12 light orange-text">Leaderboard</h5>
                 </div>
-                <div class="row center">
+                <div className="row center">
                     <table>
                         <thead>
                             <tr>

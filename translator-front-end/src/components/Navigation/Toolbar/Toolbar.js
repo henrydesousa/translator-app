@@ -1,17 +1,15 @@
 import React from 'react';
-import { Navbar, NavItem } from 'react-materialize';
+import NavigationItems from '../NavigationItems/NavigationItems';
 
-const toolbar = (props) => (
-    <Navbar brand={<a id="logo-container" href="/">Translator</a>} 
-            alignLinks="right"
-            className="light-blue lighten-1">
-        <NavItem href="">
-            Leaderboard
-        </NavItem>
-        <NavItem href="components.html">
-            Log in
-        </NavItem>
-    </Navbar>
+const toolbar = () => (
+    <nav className="light-blue lighten-1" role="navigation">
+        <div className="container">
+            <a id="logo-container" href="#" className="brand-logo">Translator</a>
+            <NavigationItems classes="right hide-on-med-and-down" />
+            <NavigationItems id="nav-mobile" classes="sidenav" />
+            <a href="#" data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+        </div>
+    </nav>
 );
 
 export default toolbar;

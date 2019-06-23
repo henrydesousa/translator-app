@@ -45,9 +45,8 @@ class GameSetup extends Component {
         let form = (
             <form>
                 {formElementsArray.map(formElement => (
-                    <div class="col s12 m6">
+                    <div key={formElement.id} className="col s12 m6">
                         <Select
-                            key={formElement.id}
                             elementConfig={formElement.config.elementConfig}
                             label={formElement.config.label}
                             defaultValue={formElement.config.defaultValue} />
