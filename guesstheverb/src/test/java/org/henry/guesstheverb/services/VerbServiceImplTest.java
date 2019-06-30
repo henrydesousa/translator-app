@@ -81,7 +81,7 @@ public class VerbServiceImplTest {
         QuizAnswer quizAnswerAttempt = new QuizAnswer(user, verbToBeTranslated, "kaufen", "de", false);
         QuizAnswer quizAnswerVerifiedAttempt = new QuizAnswer(user, verbToBeTranslated, "kaufen", "de", true);
         QuizAnswer quizAnswerFromDB = new QuizAnswer(quizAnswerAttempt.getUser(), quizAnswerAttempt.getVerbToBeTranslated(), "", quizAnswerAttempt.getLanguage(), false);
-        VerbTranslatedEvent verbTranslatedEvent = new VerbTranslatedEvent(quizAnswerVerifiedAttempt.getId(), quizAnswerVerifiedAttempt.getUser().getId(), quizAnswerVerifiedAttempt.isCorrect());
+        VerbTranslatedEvent verbTranslatedEvent = new VerbTranslatedEvent(quizAnswerVerifiedAttempt.getId(), quizAnswerVerifiedAttempt.getUser().getAlias(), quizAnswerVerifiedAttempt.isCorrect());
         when(verbRepository.findByGroupIdAndLanguage(any(String.class), any(String.class))).thenReturn(Optional.of(verbFromDB));
         when(quizAnswerRepository.findByUserAndVerbToBeTranslatedAndLanguage(any(User.class), any(Verb.class), any(String.class))).thenReturn(Optional.of(quizAnswerFromDB));
 
@@ -103,7 +103,7 @@ public class VerbServiceImplTest {
         QuizAnswer quizAnswerAttempt = new QuizAnswer(user, verbToBeTranslated, "lernen", "de", false);
         QuizAnswer quizAnswerVerifiedAttempt = new QuizAnswer(user, verbToBeTranslated, "lernen", "de", false);
         QuizAnswer quizAnswerFromDB = new QuizAnswer(quizAnswerAttempt.getUser(), quizAnswerAttempt.getVerbToBeTranslated(), "", quizAnswerAttempt.getLanguage(), false);
-        VerbTranslatedEvent verbTranslatedEvent = new VerbTranslatedEvent(quizAnswerVerifiedAttempt.getId(), quizAnswerVerifiedAttempt.getUser().getId(), quizAnswerVerifiedAttempt.isCorrect());
+        VerbTranslatedEvent verbTranslatedEvent = new VerbTranslatedEvent(quizAnswerVerifiedAttempt.getId(), quizAnswerVerifiedAttempt.getUser().getAlias(), quizAnswerVerifiedAttempt.isCorrect());
         when(verbRepository.findByGroupIdAndLanguage(any(String.class), any(String.class))).thenReturn(Optional.of(verbFromDB));
         when(quizAnswerRepository.findByUserAndVerbToBeTranslatedAndLanguage(any(User.class), any(Verb.class), any(String.class))).thenReturn(Optional.of(quizAnswerFromDB));
 

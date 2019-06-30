@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
+import axios from '../../axios-translator';
 
 class Leaderboard extends Component {
     state = {
-        leaderboard: [
-            {
-                userName: 'Henry',
-                score: 100
-            },
-            {
-                userName: 'Alan',
-                score: 95
-            },
-            {
-                userName: 'Jonathan',
-                score: 30
-            }
-        ]
+        leaderboard: []
     };
+
+    componentDidMount() {
+        axios.get('/leaders')
+            .then(res => {
+                this.setState({leaderboard: res.data})
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
     render() {
         const leaderboardRows = this.state.leaderboard.map(l => {
             return (
-                <tr key={l.userName}>
-                    <td>{l.userName}</td>
-                    <td>{l.score}</td>
+                <tr key={l.userId}>
+                    <td>{l.userId}</td>
+                    <td>{l.totalScore}</td>
                 </tr>
             );
         });

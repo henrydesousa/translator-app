@@ -13,7 +13,7 @@ class App extends Component {
       <div>
         <Layout>
           <Switch>
-            <Route path="/translator" component={Translator} />
+            <Route path="/translator/:translateFrom/:translateInto" component={Translator} />
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/auth" component={Auth} />
             <Route path="/statistics" component={Statistics} />

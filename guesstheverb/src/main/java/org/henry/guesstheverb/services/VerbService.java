@@ -12,7 +12,7 @@ public interface VerbService {
 
     boolean checkAnswer(final QuizAnswer quizAnswer);
 
-    List<QuizAnswer> getStatsForUser(final String userAlias);
+    List<QuizAnswer> getAnswersByUser(final String userAlias);
 
     Optional<QuizAnswer> getAnswerById(String answerId);
 

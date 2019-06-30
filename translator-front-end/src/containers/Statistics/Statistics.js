@@ -1,33 +1,55 @@
 import React, { Component } from 'react';
-import Input from '../../components/UI/Input/Input';
+import axios from '../../axios-translator';
+import { updateObject } from '../../shared/utility';
+import InlineInput from '../../components/UI/InlineInput/InlineInput';
 
 class Statistics extends Component {
     state = {
-        authForm: {
+        statisticsForm: {
             userName: {
-                type: 'text',
-                label: 'Username',
-                value: 'henry.desousa'
+                description: 'Username',
+                value: ''
             },
             totalScore: {
-                type: 'text',
-                label: 'Total Score',
-                value: '100'
+                description: 'Total Score',
+                value: ''
             },
             badges: {
-                type: 'text',
-                label: 'Badges',
-                value: 'GERMAN TRANSLATOR'
-            },
+                description: 'Badges',
+                value: ''
+            }
         }
     };
 
+    componentDidMount() {
+        console.log(this.state.statisticsForm);
+        axios.get('stats?userId=john_doe')
+            .then(res => {
+                this.inputChangedHandler("userName", res.data.userId);
+                this.inputChangedHandler("totalScore", res.data.score);
+                this.inputChangedHandler("badges", res.data.badges.join(' '));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    inputChangedHandler = (inputIdentifier, value) => {
+        const updatedFormElement = updateObject(this.state.statisticsForm[inputIdentifier], {
+            value: value
+        });
+        const updatedStatisticsForm = updateObject(this.state.statisticsForm, {
+            [inputIdentifier]: updatedFormElement
+        });
+        this.setState({ statisticsForm: updatedStatisticsForm });
+    }
+
     render() {
         const formElementsArray = [];
-        for (let key in this.state.authForm) {
+        for (let key in this.state.statisticsForm) {
             formElementsArray.push({
                 id: key,
-                config: this.state.authForm[key]
+                config: this.state.statisticsForm[key]
             });
         }
 
@@ -40,12 +62,12 @@ class Statistics extends Component {
                                 <div className="card-content">
                                     <span className="card-title orange-text">Your statistics</span>
                                     {formElementsArray.map(formElement => (
-                                        <Input
-                                            key={formElement.id}
-                                            type={formElement.config.type}
-                                            label={formElement.config.label}
-                                            value={formElement.config.value}
-                                            disabled />
+                                        <div className="row" key={formElement.id}>
+                                            <InlineInput
+                                                description={formElement.config.description}
+                                                value={formElement.config.value}
+                                                disabled />
+                                        </div>
                                     ))}
                                 </div>
 

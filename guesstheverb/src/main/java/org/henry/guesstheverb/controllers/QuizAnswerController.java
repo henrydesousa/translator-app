@@ -40,8 +40,8 @@ public class QuizAnswerController {
     }
 
     @GetMapping
-    ResponseEntity<List<QuizAnswer>> getStatistics(@RequestParam String alias) {
-        return ResponseEntity.ok(verbService.getStatsForUser(alias));
+    ResponseEntity<List<QuizAnswer>> getAnswersByUser(@RequestParam String alias) {
+        return ResponseEntity.ok(verbService.getAnswersByUser(alias));
     }
 
     @GetMapping("/{answerId}")

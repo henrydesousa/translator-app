@@ -5,7 +5,10 @@ const inlineInput = (props) => {
         <React.Fragment>
             <b>{props.description}</b>:
             <div className="input-field inline">
-                <input type="text" />
+                <input type="text" 
+                       value={props.value} 
+                       disabled={props.disabled}
+                       onChange={props.changed} />
                 <label>{props.label}</label>
             </div>             
         </React.Fragment>

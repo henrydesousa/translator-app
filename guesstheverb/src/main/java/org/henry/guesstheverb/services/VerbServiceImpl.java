@@ -70,7 +70,7 @@ public class VerbServiceImpl implements VerbService {
     }
 
     @Override
-    public List<QuizAnswer> getStatsForUser(final String userAlias) {
+    public List<QuizAnswer> getAnswersByUser(final String userAlias) {
         return quizAnswerRepository.findTop5ByUserAliasOrderByIdDesc(userAlias);
     }
 
