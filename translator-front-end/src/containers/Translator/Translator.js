@@ -4,6 +4,8 @@ import Answers from '../../components/Answers/Answers';
 import axios from '../../axios-translator';
 import { updateObject } from '../../shared/utility';
 import Button from '../../components/UI/Button/Button';
+import * as actions from '../../store/actions/index';
+import { connect } from 'react-redux';
 
 class Translator extends Component {
     state = {
@@ -15,7 +17,6 @@ class Translator extends Component {
             }
         },
         verbToBeTranslated: null,
-        answers: [],
         isCheckOn: true,
         languages: [
             { code: 'en', name: 'English' },
@@ -64,7 +65,7 @@ class Translator extends Component {
             };
             axios.post('/answers', answer)
                 .then(res => {
-                    this.addAnswer(res.data);
+                    this.props.onAddAnswer(res.data);
                 })
                 .catch(error => {
                     console.log(error);
@@ -75,17 +76,6 @@ class Translator extends Component {
         this.setState(prevState => {
             return { isCheckOn: !prevState.isCheckOn };
         });
-    }
-
-    addAnswer = userAnswer => {
-        const newAnswerObj = {
-            verb: userAnswer.verbToBeTranslated.name,
-            answer: userAnswer.answer,
-            correct: userAnswer.correct ? "Yes" : "No"
-        };
-        this.setState(prevState => ({
-            answers: [newAnswerObj, ...prevState.answers]
-        }));
     }
 
     getLanguageName = code => {
@@ -112,10 +102,22 @@ class Translator extends Component {
                         <Button>{this.state.isCheckOn ? 'Check' : 'Next Verb'}</Button>
                     </div>
                 </form>
-                {this.state.answers.length > 0 ? <Answers answers={this.state.answers} /> : null}
+                {this.props.answers.length > 0 ? <Answers answers={this.props.answers} /> : null}
             </React.Fragment>
         );
     }
 }
 
-export default Translator;
+const mapStateToProps = state => {
+    return {
+        answers: state.translator.userAnswers
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddAnswer: userAnswer => dispatch(actions.addUserAnswer(userAnswer))
+    }; 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Translator);

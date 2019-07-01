@@ -1,0 +1,2 @@
+export const START_GAME_SUCCESS = 'START_GAME_SUCCESS';
+export const ADD_USER_ANSWER = 'ADD_USER_ANSWER';
