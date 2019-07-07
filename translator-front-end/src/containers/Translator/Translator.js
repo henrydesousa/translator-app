@@ -1,123 +1,177 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import InlineInput from '../../components/UI/InlineInput/InlineInput';
 import Answers from '../../components/Answers/Answers';
 import axios from '../../axios-translator';
 import { updateObject } from '../../shared/utility';
 import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
-import { connect } from 'react-redux';
 
 class Translator extends Component {
-    state = {
-        translatorForm: {
-            yourTranslation: {
-                description: '',
-                label: 'Your translation',
-                value: '',
-            }
+  state = {
+    translatorForm: {
+      yourTranslation: {
+        description: '',
+        label: 'Your translation',
+        value: '',
+      },
+    },
+    verbToBeTranslated: null,
+    isCheckOn: true,
+    languages: [
+      { code: 'en', name: 'English' },
+      { code: 'de', name: 'German' },
+      { code: 'es', name: 'Spanish' },
+    ],
+  };
+
+  componentDidMount() {
+    this.getNextVerbHandler();
+  }
+
+  getNextVerbHandler = () => {
+    axios
+      .get('/verbs/next/john_doe')
+      .then((res) => {
+        this.updateYourTranslationField('description', res.data.name);
+        this.updateYourTranslationField('value', '');
+        this.setState({ verbToBeTranslated: res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  updateYourTranslationField = (propertyName, value) => {
+    const {
+      translatorForm,
+      translatorForm: { yourTranslation },
+    } = this.state;
+
+    const updatedFormElement = updateObject(yourTranslation, {
+      [propertyName]: value,
+    });
+    const updatedTranslatorForm = updateObject(translatorForm, {
+      yourTranslation: updatedFormElement,
+    });
+    this.setState({ translatorForm: updatedTranslatorForm });
+  };
+
+  postAnswerHandler = (event) => {
+    const {
+      translatorForm: {
+        yourTranslation: { value },
+      },
+      isCheckOn,
+      verbToBeTranslated,
+    } = this.state;
+    const {
+      match: {
+        params: { translateInto },
+      },
+      onAddAnswer,
+    } = this.props;
+
+    event.preventDefault();
+    if (isCheckOn) {
+      const answer = {
+        user: {
+          alias: 'john_doe',
         },
-        verbToBeTranslated: null,
-        isCheckOn: true,
-        languages: [
-            { code: 'en', name: 'English' },
-            { code: 'de', name: 'German' },
-            { code: 'es', name: 'Spanish' }
-        ]
-    };
-
-    componentDidMount() {
-        this.getNextVerbHandler();
-    }
-
-    getNextVerbHandler = () => {
-        axios.get('/verbs/next/john_doe')
-            .then(res => {
-                this.updateYourTranslationField("description", res.data.name);
-                this.updateYourTranslationField("value", "");
-                this.setState({ verbToBeTranslated: res.data });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    updateYourTranslationField = (propertyName, value) => {
-        const updatedFormElement = updateObject(this.state.translatorForm['yourTranslation'], {
-            [propertyName]: value
+        verbToBeTranslated,
+        answer: value,
+        language: translateInto,
+      };
+      axios
+        .post('/answers', answer)
+        .then((res) => {
+          onAddAnswer(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        const updatedTranslatorForm = updateObject(this.state.translatorForm, {
-            yourTranslation: updatedFormElement
-        });
-        this.setState({ translatorForm: updatedTranslatorForm });
+    } else {
+      this.getNextVerbHandler();
     }
+    this.setState(prevState => ({ isCheckOn: !prevState.isCheckOn }));
+  };
 
-    postAnswerHandler = (event) => {
-        event.preventDefault();
+  getLanguageName = (code) => {
+    const { languages } = this.state;
+    return languages.find(e => e.code === code).name;
+  };
 
-        if (this.state.isCheckOn) {
-            const answer = {
-                user: {
-                    alias: "john_doe"
-                },
-                verbToBeTranslated: this.state.verbToBeTranslated,
-                answer: this.state.translatorForm.yourTranslation.value,
-                language: this.props.match.params.translateInto
-            };
-            axios.post('/answers', answer)
-                .then(res => {
-                    this.props.onAddAnswer(res.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        } else {
-            this.getNextVerbHandler();
-        }
-        this.setState(prevState => {
-            return { isCheckOn: !prevState.isCheckOn };
-        });
-    }
+  render() {
+    const {
+      translatorForm: {
+        yourTranslation: { description, label, value },
+      },
+      isCheckOn,
+    } = this.state;
+    const {
+      match: {
+        params: { translateFrom, translateInto },
+      },
+      answers,
+    } = this.props;
 
-    getLanguageName = code => {
-        return this.state.languages.find( e => e.code === code ).name;
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <form onSubmit={this.postAnswerHandler}>
-                    <div className="row center">
-                        <h5 className="header col s12 light">
-                            Translate from <span className="orange-text">{this.getLanguageName(this.props.match.params.translateFrom)} </span> 
-                            into <span className="orange-text">{this.getLanguageName(this.props.match.params.translateInto)} </span> 
-                            the verb <b>in bold</b>
-                        </h5>
-                        <InlineInput
-                            description={this.state.translatorForm.yourTranslation.description}
-                            label={this.state.translatorForm.yourTranslation.label}
-                            value={this.state.translatorForm.yourTranslation.value}
-                            changed={(event) => this.updateYourTranslationField("value", event.target.value)} />
-                    </div>
-                    <div className="row center">
-                        <Button>{this.state.isCheckOn ? 'Check' : 'Next Verb'}</Button>
-                    </div>
-                </form>
-                {this.props.answers.length > 0 ? <Answers answers={this.props.answers} /> : null}
-            </React.Fragment>
-        );
-    }
+    return (
+      <React.Fragment>
+        <form onSubmit={this.postAnswerHandler}>
+          <div className="row center">
+            <h5 className="header col s12 light">
+              Translate from
+              <span className="orange-text">
+                {this.getLanguageName(translateFrom)}
+              </span>
+              into
+              <span className="orange-text">
+                {this.getLanguageName(translateInto)}
+              </span>
+              the verb
+              <b>in bold</b>
+            </h5>
+            <InlineInput
+              description={description}
+              label={label}
+              value={value}
+              changed={event =>
+                this.updateYourTranslationField('value', event.target.value)
+              }
+            />
+          </div>
+          <div className="row center">
+            <Button>{isCheckOn ? 'Check' : 'Next Verb'}</Button>
+          </div>
+        </form>
+        {answers.length > 0 ? <Answers userAnswers={answers} /> : null}
+      </React.Fragment>
+    );
+  }
 }
 
-const mapStateToProps = state => {
-    return {
-        answers: state.translator.userAnswers
-    };
+Translator.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      translateFrom: PropTypes.string.isRequired,
+      translateInto: PropTypes.string.isRequired,
+    }),
+  }),
+  answers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onAddAnswer: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onAddAnswer: userAnswer => dispatch(actions.addUserAnswer(userAnswer))
-    }; 
-};
+const mapStateToProps = state => ({
+  answers: state.translator.userAnswers,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Translator);
+const mapDispatchToProps = dispatch => ({
+  onAddAnswer: userAnswer => dispatch(actions.addUserAnswer(userAnswer)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Translator);

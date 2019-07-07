@@ -2,51 +2,50 @@ import React, { Component } from 'react';
 import axios from '../../axios-translator';
 
 class Leaderboard extends Component {
-    state = {
-        leaderboard: []
-    };
+  state = {
+    leaderboard: [],
+  };
 
-    componentDidMount() {
-        axios.get('/leaders')
-            .then(res => {
-                this.setState({leaderboard: res.data})
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+  componentDidMount() {
+    axios
+      .get('/leaders')
+      .then((res) => {
+        this.setState({ leaderboard: res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-    render() {
-        const leaderboardRows = this.state.leaderboard.map(l => {
-            return (
-                <tr key={l.userId}>
-                    <td>{l.userId}</td>
-                    <td>{l.totalScore}</td>
-                </tr>
-            );
-        });
-        return (
-            <React.Fragment>
-                <div className="row center">
-                    <h5 className="header col s12 light orange-text">Leaderboard</h5>
-                </div>
-                <div className="row center">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
+  render() {
+    const { leaderboard } = this.state;
 
-                        <tbody>
-                            {leaderboardRows}
-                        </tbody>
-                    </table>
-                </div>
-            </React.Fragment>
-        );
-    }
+    const leaderboardRows = leaderboard.map(l => (
+      <tr key={l.userId}>
+        <td>{l.userId}</td>
+        <td>{l.totalScore}</td>
+      </tr>
+    ));
+    return (
+      <React.Fragment>
+        <div className="row center">
+          <h5 className="header col s12 light orange-text">Leaderboard</h5>
+        </div>
+        <div className="row center">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+
+            <tbody>{leaderboardRows}</tbody>
+          </table>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 export default Leaderboard;
