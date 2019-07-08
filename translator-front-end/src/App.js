@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import {
+ Route, Switch, withRouter, Redirect 
+} from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import GameSetup from './containers/GameSetup/GameSetup';
 import Translator from './containers/Translator/Translator';

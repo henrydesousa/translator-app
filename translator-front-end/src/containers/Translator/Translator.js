@@ -13,7 +13,6 @@ class Translator extends Component {
     translatorForm: {
       yourTranslation: {
         description: '',
-        label: 'Your translation',
         value: '',
       },
     },
@@ -25,6 +24,7 @@ class Translator extends Component {
       { code: 'es', name: 'Spanish' },
     ],
     showError: false,
+    isAnswerCorrect: false,
   };
 
   componentDidMount() {
@@ -92,6 +92,7 @@ class Translator extends Component {
           .post('/answers', answer)
           .then((res) => {
             onAddAnswer(res.data);
+            this.setState({ isAnswerCorrect: res.data.correct });
           })
           .catch((error) => {
             console.log(error);
@@ -115,10 +116,11 @@ class Translator extends Component {
   render() {
     const {
       translatorForm: {
-        yourTranslation: { description, label, value },
+        yourTranslation: { description, value },
       },
       isCheckOn,
       showError,
+      isAnswerCorrect,
     } = this.state;
     const {
       match: {
@@ -133,6 +135,15 @@ class Translator extends Component {
         <div>
           <p style={{ color: 'red' }}>Please enter an answer.</p>
         </div>
+      );
+    }
+
+    let answerIcon = null;
+    if (!isCheckOn) {
+      answerIcon = isAnswerCorrect ? (
+        <i className="material-icons">thumb_up</i>
+      ) : (
+        <i className="material-icons">thumb_down</i>
       );
     }
 
@@ -156,12 +167,12 @@ class Translator extends Component {
             </h5>
             <InlineInput
               description={description}
-              label={label}
               value={value}
               changed={event =>
                 this.updateYourTranslationField('value', event.target.value)
               }
             />
+            {answerIcon}
             {errorMessage}
           </div>
           <div className="row center">
