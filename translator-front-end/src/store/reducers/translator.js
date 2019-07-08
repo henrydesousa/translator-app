@@ -8,7 +8,8 @@ const initialState = {
   userAnswers: [],
 };
 
-const startGameSuccess = (state, action) => updateObject(state, {
+const startGameSuccess = (state, action) =>
+  updateObject(state, {
     redirectToTranslator: true,
     translateFrom: action.translateFrom,
     translateInto: action.translateInto,

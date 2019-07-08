@@ -1,20 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
-class Layout extends Component {
-    render() {
-        return (
-            <React.Fragment>
-                <Toolbar />
-                <div className="section no-pad-bot">
-                    <div className="container">
-                        <br /><br />
-                        {this.props.children}
-                    </div>
-                </div>
-            </React.Fragment>
-        );
-    }
-}
+const layout = ({ children }) => (
+  <React.Fragment>
+    <Toolbar />
+    <div className="section no-pad-bot">
+      <div className="container">
+        <br />
+        <br />
+        {children}
+      </div>
+    </div>
+  </React.Fragment>
+);
 
-export default Layout;
+layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default layout;
