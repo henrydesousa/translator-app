@@ -46,19 +46,25 @@ class GameSetup extends Component {
         label: 'Into',
       },
     },
+    showError: false,
   };
 
   startGameHandler = (event) => {
+    event.preventDefault();
     const {
       gameSetupForm: {
         translateFrom: { value: valueFrom },
         translateInto: { value: valueInto },
       },
     } = this.state;
-    const { onGameStart } = this.props;
 
-    event.preventDefault();
-    onGameStart(valueFrom, valueInto);
+    if (valueFrom === 'default' || valueInto === 'default') {
+      this.setState({ showError: true });
+    } else {
+      this.setState({ showError: false });
+      const { onGameStart } = this.props;
+      onGameStart(valueFrom, valueInto);
+    }
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -75,10 +81,21 @@ class GameSetup extends Component {
 
   render() {
     const { redirectToTranslator, translateFrom, translateInto } = this.props;
-    const { gameSetupForm } = this.state;
+    const { gameSetupForm, showError } = this.state;
 
     if (redirectToTranslator) {
       return <Redirect to={`/translator/${translateFrom}/${translateInto}`} />;
+    }
+
+    let errorMessage = null;
+    if (showError) {
+      errorMessage = (
+        <div>
+          <p style={{ color: 'red' }}>
+            Translate From and Into are required fields.
+          </p>
+        </div>
+      );
     }
 
     const formElementsArray = [];
@@ -101,6 +118,7 @@ class GameSetup extends Component {
             />
           </div>
         ))}
+        {errorMessage}
         <Button>Get Started</Button>
       </form>
     );

@@ -24,6 +24,7 @@ class Translator extends Component {
       { code: 'de', name: 'German' },
       { code: 'es', name: 'Spanish' },
     ],
+    showError: false,
   };
 
   componentDidMount() {
@@ -65,36 +66,46 @@ class Translator extends Component {
       },
       isCheckOn,
       verbToBeTranslated,
+      showError,
     } = this.state;
-    const {
-      match: {
-        params: { translateInto },
-      },
-      onAddAnswer,
-    } = this.props;
 
     event.preventDefault();
     if (isCheckOn) {
-      const answer = {
-        user: {
-          alias: 'john_doe',
-        },
-        verbToBeTranslated,
-        answer: value,
-        language: translateInto,
-      };
-      axios
-        .post('/answers', answer)
-        .then((res) => {
-          onAddAnswer(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (value === '') {
+        this.setState({ showError: true });
+      } else {
+        this.setState({ showError: false });
+        const {
+          match: {
+            params: { translateInto },
+          },
+          onAddAnswer,
+        } = this.props;
+        const answer = {
+          user: {
+            alias: 'john_doe',
+          },
+          verbToBeTranslated,
+          answer: value,
+          language: translateInto,
+        };
+        axios
+          .post('/answers', answer)
+          .then((res) => {
+            onAddAnswer(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     } else {
       this.getNextVerbHandler();
     }
-    this.setState(prevState => ({ isCheckOn: !prevState.isCheckOn }));
+
+    this.setState((prevState) => {
+      if (prevState.showError) return null;
+      return { isCheckOn: !prevState.isCheckOn };
+    });
   };
 
   getLanguageName = (code) => {
@@ -108,6 +119,7 @@ class Translator extends Component {
         yourTranslation: { description, label, value },
       },
       isCheckOn,
+      showError,
     } = this.state;
     const {
       match: {
@@ -115,6 +127,15 @@ class Translator extends Component {
       },
       answers,
     } = this.props;
+
+    let errorMessage = null;
+    if (showError) {
+      errorMessage = (
+        <div>
+          <p style={{ color: 'red' }}>Please enter an answer.</p>
+        </div>
+      );
+    }
 
     return (
       <React.Fragment>
@@ -140,6 +161,7 @@ class Translator extends Component {
                 this.updateYourTranslationField('value', event.target.value)
               }
             />
+            {errorMessage}
           </div>
           <div className="row center">
             <Button>{isCheckOn ? 'Check' : 'Next Verb'}</Button>
