@@ -66,7 +66,6 @@ class Translator extends Component {
       },
       isCheckOn,
       verbToBeTranslated,
-      showError,
     } = this.state;
 
     event.preventDefault();
@@ -144,14 +143,16 @@ class Translator extends Component {
             <h5 className="header col s12 light">
               Translate from
               <span className="orange-text">
+                {' '}
                 {this.getLanguageName(translateFrom)}
               </span>
-              into
+              {' into'}
               <span className="orange-text">
+                {' '}
                 {this.getLanguageName(translateInto)}
               </span>
-              the verb
-              <b>in bold</b>
+              {' the verb'}
+              <b> in bold</b>
             </h5>
             <InlineInput
               description={description}
