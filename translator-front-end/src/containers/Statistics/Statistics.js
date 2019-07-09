@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from '../../axios-translator';
 import { updateObject } from '../../shared/utility';
 import InlineInput from '../../components/UI/InlineInput/InlineInput';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Statistics extends Component {
   state = {
@@ -85,4 +86,4 @@ class Statistics extends Component {
   }
 }
 
-export default Statistics;
+export default withErrorHandler(Statistics, axios);

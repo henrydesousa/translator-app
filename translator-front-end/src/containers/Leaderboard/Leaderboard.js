@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../axios-translator';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Leaderboard extends Component {
   state = {
@@ -48,4 +49,4 @@ class Leaderboard extends Component {
   }
 }
 
-export default Leaderboard;
+export default withErrorHandler(Leaderboard, axios);

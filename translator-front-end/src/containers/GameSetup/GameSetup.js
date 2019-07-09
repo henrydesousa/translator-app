@@ -9,6 +9,8 @@ import Select from '../../components/UI/Select/Select';
 import Button from '../../components/UI/Button/Button';
 import { updateObject } from '../../shared/utility';
 import * as actions from '../../store/actions/index';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-translator';
 
 class GameSetup extends Component {
   state = {
@@ -147,4 +149,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GameSetup);
+)(withErrorHandler(GameSetup, axios));

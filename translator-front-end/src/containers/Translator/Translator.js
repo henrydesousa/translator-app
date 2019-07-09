@@ -7,6 +7,7 @@ import axios from '../../axios-translator';
 import { updateObject } from '../../shared/utility';
 import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Translator extends Component {
   state = {
@@ -208,4 +209,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Translator);
+)(withErrorHandler(Translator, axios));
