@@ -19,11 +19,6 @@ class Translator extends Component {
     },
     verbToBeTranslated: null,
     isCheckOn: true,
-    languages: [
-      { code: 'en', name: 'English' },
-      { code: 'de', name: 'German' },
-      { code: 'es', name: 'Spanish' },
-    ],
     showError: false,
     isAnswerCorrect: false,
   };
@@ -110,7 +105,7 @@ class Translator extends Component {
   };
 
   getLanguageName = (code) => {
-    const { languages } = this.state;
+    const { languages } = this.props;
     return languages.find(e => e.code === code).name;
   };
 
@@ -195,11 +190,13 @@ Translator.propTypes = {
     }),
   }),
   answers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  languages: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddAnswer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   answers: state.translator.userAnswers,
+  languages: state.translator.languages,
 });
 
 const mapDispatchToProps = dispatch => ({

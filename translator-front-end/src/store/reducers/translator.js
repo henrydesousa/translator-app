@@ -6,6 +6,11 @@ const initialState = {
   translateFrom: 'default',
   translateInto: 'default',
   userAnswers: [],
+  languages: [
+    { code: 'en', name: 'English' },
+    { code: 'de', name: 'German' },
+    { code: 'es', name: 'Spanish' },
+  ],
 };
 
 const startGameSuccess = (state, action) =>
