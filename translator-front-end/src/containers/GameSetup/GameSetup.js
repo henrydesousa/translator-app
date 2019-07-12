@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import englandFlag from '../../assets/images/england.png';
-import germanyFlag from '../../assets/images/germany.png';
-import spanishFlag from '../../assets/images/spain.png';
 import Select from '../../components/UI/Select/Select';
 import Button from '../../components/UI/Button/Button';
 import { updateObject } from '../../shared/utility';
@@ -16,34 +13,10 @@ class GameSetup extends Component {
   state = {
     gameSetupForm: {
       translateFrom: {
-        elementConfig: {
-          options: [
-            {
-              value: 'default',
-              displayValue: 'Choose your option',
-              disabled: true,
-            },
-            { value: 'en', displayValue: 'English', icon: englandFlag },
-            { value: 'de', displayValue: 'German', icon: germanyFlag },
-            { value: 'es', displayValue: 'Spanish', icon: spanishFlag },
-          ],
-        },
         value: 'default',
         label: 'Translate From',
       },
       translateInto: {
-        elementConfig: {
-          options: [
-            {
-              value: 'default',
-              displayValue: 'Choose your option',
-              disabled: true,
-            },
-            { value: 'en', displayValue: 'English', icon: englandFlag },
-            { value: 'de', displayValue: 'German', icon: germanyFlag },
-            { value: 'es', displayValue: 'Spanish', icon: spanishFlag },
-          ],
-        },
         value: 'default',
         label: 'Into',
       },
@@ -82,7 +55,12 @@ class GameSetup extends Component {
   };
 
   render() {
-    const { redirectToTranslator, translateFrom, translateInto } = this.props;
+    const {
+      redirectToTranslator,
+      translateFrom,
+      translateInto,
+      languages,
+    } = this.props;
     const { gameSetupForm, showError } = this.state;
 
     if (redirectToTranslator) {
@@ -100,26 +78,39 @@ class GameSetup extends Component {
       );
     }
 
-    const formElementsArray = [];
-    Object.keys(gameSetupForm).forEach((key) => {
-      formElementsArray.push({
-        id: key,
-        config: gameSetupForm[key],
+    const dropDownOptions = [
+      {
+        value: 'default',
+        displayValue: 'Choose your option',
+        disabled: true,
+      },
+    ];
+    languages.forEach((element) => {
+      dropDownOptions.push({
+        value: element.code,
+        displayValue: element.name,
+        icon: element.icon,
       });
     });
 
     const form = (
       <form onSubmit={this.startGameHandler}>
-        {formElementsArray.map(formElement => (
-          <div key={formElement.id} className="col s12 m6">
-            <Select
-              elementConfig={formElement.config.elementConfig}
-              label={formElement.config.label}
-              value={formElement.config.value}
-              changed={event => this.inputChangedHandler(event, formElement.id)}
-            />
-          </div>
-        ))}
+        <div className="col s12 m6">
+          <Select
+            options={dropDownOptions}
+            label={gameSetupForm.translateFrom.label}
+            value={gameSetupForm.translateFrom.value}
+            changed={event => this.inputChangedHandler(event, 'translateFrom')}
+          />
+        </div>
+        <div className="col s12 m6">
+          <Select
+            options={dropDownOptions}
+            label={gameSetupForm.translateInto.label}
+            value={gameSetupForm.translateInto.value}
+            changed={event => this.inputChangedHandler(event, 'translateInto')}
+          />
+        </div>
         {errorMessage}
         <Button>Get Started</Button>
       </form>
@@ -133,12 +124,14 @@ GameSetup.propTypes = {
   redirectToTranslator: PropTypes.bool.isRequired,
   translateFrom: PropTypes.string.isRequired,
   translateInto: PropTypes.string.isRequired,
+  languages: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => ({
   redirectToTranslator: state.translator.redirectToTranslator,
   translateFrom: state.translator.translateFrom,
   translateInto: state.translator.translateInto,
+  languages: state.translator.languages,
 });
 
 const mapDispatchToProps = dispatch => ({

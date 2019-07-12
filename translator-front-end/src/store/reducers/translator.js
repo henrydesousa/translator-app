@@ -1,5 +1,8 @@
 import { updateObject } from '../../shared/utility';
 import * as actionTypes from '../actions/actionTypes';
+import englandFlag from '../../assets/images/england.png';
+import germanyFlag from '../../assets/images/germany.png';
+import spanishFlag from '../../assets/images/spain.png';
 
 const initialState = {
   redirectToTranslator: false,
@@ -7,9 +10,9 @@ const initialState = {
   translateInto: 'default',
   userAnswers: [],
   languages: [
-    { code: 'en', name: 'English' },
-    { code: 'de', name: 'German' },
-    { code: 'es', name: 'Spanish' },
+    { code: 'en', name: 'English', icon: englandFlag },
+    { code: 'de', name: 'German', icon: germanyFlag },
+    { code: 'es', name: 'Spanish', icon: spanishFlag },
   ],
 };
 
