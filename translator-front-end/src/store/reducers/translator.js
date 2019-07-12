@@ -14,6 +14,7 @@ const initialState = {
     { code: 'de', name: 'German', icon: germanyFlag },
     { code: 'es', name: 'Spanish', icon: spanishFlag },
   ],
+  leaderboard: [],
 };
 
 const startGameSuccess = (state, action) =>
@@ -34,12 +35,19 @@ const addUserAnswer = (state, action) => {
   });
 };
 
+const fetchLeaderboardSuccess = (state, action) =>
+  updateObject(state, {
+    leaderboard: action.leaderboard,
+  });
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.START_GAME_SUCCESS:
       return startGameSuccess(state, action);
     case actionTypes.ADD_USER_ANSWER:
       return addUserAnswer(state, action);
+    case actionTypes.FETCH_LEADERBOARD_SUCCESS:
+      return fetchLeaderboardSuccess(state, action);
     default:
       return state;
   }

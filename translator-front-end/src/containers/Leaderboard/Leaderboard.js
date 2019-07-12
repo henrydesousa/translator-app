@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import axios from '../../axios-translator';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../store/actions/index';
 
 class Leaderboard extends Component {
-  state = {
-    leaderboard: [],
-  };
-
   componentDidMount() {
-    axios
-      .get('/leaders')
-      .then((res) => {
-        this.setState({ leaderboard: res.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const { onFetchLeaderboard } = this.props;
+    onFetchLeaderboard();
   }
 
   render() {
-    const { leaderboard } = this.state;
+    const { leaderboard } = this.props;
 
     const leaderboardRows = leaderboard.map(l => (
       <tr key={l.userId}>
@@ -49,4 +42,19 @@ class Leaderboard extends Component {
   }
 }
 
-export default withErrorHandler(Leaderboard, axios);
+Leaderboard.propTypes = {
+  onFetchLeaderboard: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  leaderboard: state.translator.leaderboard,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchLeaderboard: () => dispatch(actions.fetchLeaderboard()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withErrorHandler(Leaderboard, axios));

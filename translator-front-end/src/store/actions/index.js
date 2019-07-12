@@ -1,1 +1,1 @@
-export { startGame, addUserAnswer } from './translator';
+export { startGame, addUserAnswer, fetchLeaderboard } from './translator';

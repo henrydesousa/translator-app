@@ -13,6 +13,11 @@ export const addUserAnswer = userAnswer => ({
   userAnswer,
 });
 
+export const fetchLeaderboardSuccess = leaderboard => ({
+  type: actionTypes.FETCH_LEADERBOARD_SUCCESS,
+  leaderboard,
+});
+
 // Asynchronous action creators
 export const startGame = (translateFrom, translateInto) => (dispatch) => {
   axios
@@ -21,6 +26,17 @@ export const startGame = (translateFrom, translateInto) => (dispatch) => {
     )
     .then((res) => {
       dispatch(startGameSuccess(translateFrom, translateInto));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const fetchLeaderboard = () => (dispatch) => {
+  axios
+    .get('/leaders')
+    .then((res) => {
+      dispatch(fetchLeaderboardSuccess(res.data));
     })
     .catch((error) => {
       console.log(error);
