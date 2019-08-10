@@ -5,10 +5,16 @@ zuul:
   ignoredServices: '*'
   prefix: /api
   routes:
+    auth:
+      path: /oauth/**
+      serviceId: auth-service
+      strip-prefix: false
+      sensitiveHeaders: Cookie,Set-Cookie
     guesstheverbs:
       path: /verbs/**
       serviceId: guesstheverb
       strip-prefix: false
+      sensitiveHeaders: Cookie,Set-Cookie
     answers:
       path: /answers/**
       serviceId: guesstheverb
@@ -21,17 +27,6 @@ zuul:
       path: /stats/**
       serviceId: gamification
       strip-prefix: false
-
-#set /trace endpoint as not sensitive (not requiring authentication)
-endpoints:
-  routes:
-    sensitive: false
-  trace:
-    sensitive: false
-
-#ribbon:
-#  eureka:
-#    enabled: false
 
 ---
 spring:

@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="auth-service" />
         <module name="gamification" />
         <module name="gateway" />
         <module name="guesstheverb" />
@@ -13,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="auth-service" target="1.8" />
       <module name="gamification" target="1.8" />
       <module name="gateway" target="1.8" />
       <module name="guesstheverb" target="1.8" />
